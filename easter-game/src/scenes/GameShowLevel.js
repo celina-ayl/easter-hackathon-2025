@@ -4,107 +4,88 @@ export default class GameShowLevel extends Phaser.Scene {
 
     constructor(){
         super('game-show-level');
+        this.questionCounter = 0;
     }
 
     preload(){
         this.load.image('Background', 'assets/images/GameShowBackground.jpg')
         this.load.image('Screen', 'assets/images/GameScreen.png')
         this.load.json('questions', 'assets/GameShow/QuestionsAnswers.json')
-
     }
 
     create(){
         this.add.image(400, 300, 'Background')
-        const screen = this.add.image(400, 300,'Screen').setDisplaySize(600, 300);
+        this.screen = this.add.image(400, 300,'Screen').setDisplaySize(600, 300);
 
-        const questionsData = this.cache.json.get('questions')
-        const randomIndex = Phaser.Math.Between(0, questionsData.length - 1)
-        const q = questionsData[randomIndex]
+        this.questionsData = this.cache.json.get('questions')
 
-        console.log(q.question)        
-        console.log(q.options)         
-        console.log(q.correct)        
-        
-        // @ts-ignore
-        const screenQuestion = this.add.text(screen.x-250, screen.y-50, q.question, {
+        this.loadNextQuestion()
+    }
+
+    loadNextQuestion() {
+        const randomIndex = Phaser.Math.Between(0, this.questionsData.length - 1)
+        this.currentQuestion = this.questionsData[randomIndex]
+
+        console.log(this.currentQuestion.question)
+        console.log(this.currentQuestion.options)
+        console.log(this.currentQuestion.correct)
+
+        const { screen } = this
+
+        if (this.screenQuestion) this.screenQuestion.destroy()
+        if (this.optionTexts) this.optionTexts.forEach(opt => opt.destroy())
+
+        this.screenQuestion = this.add.text(screen.x - 250, screen.y - 50, this.currentQuestion.question, {
             fontSize: '16px',
-            color: '#ffffff'
+            color: '#ffffff',
+            wordWrap: { width: 500 }
         })
 
-        const screenOption1 = this.add.text(screen.x-100, screen.y + 50, q.options[0],{
-            fontSize: '16px',
-            color: '#ffffff'
-        }).setOrigin(0.5).setInteractive({ useHandCursor: true })
+        const positions = [
+            { x: screen.x - 100, y: screen.y + 50 },
+            { x: screen.x - 100, y: screen.y + 100 },
+            { x: screen.x + 100, y: screen.y + 50 },
+            { x: screen.x + 100, y: screen.y + 100 }
+        ]
 
-        const screenOption2 = this.add.text(screen.x-100, screen.y + 100, q.options[1],{
-            fontSize: '16px',
-            color: '#ffffff'
-        }).setOrigin(0.5).setInteractive({ useHandCursor: true })
+        this.optionTexts = this.currentQuestion.options.map((opt, index) => {
+            const textObj = this.add.text(positions[index].x, positions[index].y, opt, {
+                fontSize: '16px',
+                color: '#ffffff'
+            }).setOrigin(0.5).setInteractive({ useHandCursor: true })
 
-        const screenOption3 = this.add.text(screen.x + 100, screen.y + 50, q.options[2],{
-            fontSize: '16px',
-            color: '#ffffff'
-        }).setOrigin(0.5).setInteractive({ useHandCursor: true })
+            textObj.on('pointerover', () => textObj.setTint(0x44ff44))
+            textObj.on('pointerout', () => textObj.clearTint())
+            textObj.on('pointerup', () => this.validateAnswer(index))
 
-        const screenOption4 = this.add.text(screen.x + 100, screen.y + 100, q.options[3],{
-            fontSize: '16px',
-            color: '#ffffff'
-        }).setOrigin(0.5).setInteractive({ useHandCursor: true })
-
-        screenOption1.on('pointerover', () => {
-            screenOption1.setTint(0x44ff44)
-        })
-
-        screenOption1.on('pointerout', () => {
-            screenOption1.clearTint()
-        })
-
-        screenOption1.on('pointerup', () => {
-            console.log('Play button clicked')
-            // this.scene.start('your-next-scene')
-        })
-
-
-        screenOption2.on('pointerover', () => {
-            screenOption2.setTint(0x44ff44)
-        })
-
-        screenOption2.on('pointerout', () => {
-            screenOption2.clearTint()
-        })
-
-        screenOption2.on('pointerup', () => {
-            console.log('Play button clicked')
-            // this.scene.start('your-next-scene')
-        })
-
-
-        screenOption3.on('pointerover', () => {
-            screenOption3.setTint(0x44ff44)
-        })
-
-        screenOption3.on('pointerout', () => {
-            screenOption3.clearTint()
-        })
-
-        screenOption3.on('pointerup', () => {
-            console.log('Play button clicked')
-            // this.scene.start('your-next-scene')
-        })
-
-
-        screenOption4.on('pointerover', () => {
-            screenOption4.setTint(0x44ff44)
-        })
-
-        screenOption4.on('pointerout', () => {
-            screenOption4.clearTint()
-        })
-
-        screenOption4.on('pointerup', () => {
-            console.log('Play button clicked')
-            // this.scene.start('your-next-scene')
+            return textObj
         })
     }
-    
+
+    validateAnswer(selectedIndex){
+        if((selectedIndex+1) === this.currentQuestion.correct){
+            console.log("Correct answer")
+            this.updateQuestion()
+        } else {
+            console.log("Wrong answer")
+            this.failQuestion()
+        }
+    }
+
+    updateQuestion(){
+        this.questionCounter++
+        this.checkIfLastQuestion()
+        this.loadNextQuestion()
+    }
+
+    failQuestion(){
+        // You can add visual feedback or deduct score
+        this.loadNextQuestion()
+    }
+
+    checkIfLastQuestion(){
+        if (this.questionCounter === 5){
+            this.scene.start('game-menu')
+        }
+    }
 }
