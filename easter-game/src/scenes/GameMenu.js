@@ -5,32 +5,62 @@ export default class GameMenu extends Phaser.Scene {
         super('game-menu')
     }
 
-    init() {
-        this.cursors = this.input.keyboard.createCursorKeys()
-    }
-
     preload() {
         this.load.image('GameMenu', 'assets/images/GameMenu.jpg')
+        this.load.image('button-panel', 'assets/images/buttonPanel.png')
     }
 
     create() {
-        this.add.image(400, 300, 'GameMenu')
-        this.load.image('button-panel', 'assets\images/buttonPanel.png') // panel that holds the buttons 
-        this.load.image('cursor-hand', 'assets\images/cursor_hand.png') // user's cursor
-        
-        const {width, height} = this.scale
+        const { width, height } = this.scale
 
-        // Play button
-        const playButton = this.add.image(width * 0.5, height * 0.6, 'button-panel').setDisplaySize(150,50)
+        this.add.image(width / 2, height / 2, 'GameMenu')
 
-        this.add.text(playButton.x, playButton.y, 'Play').setOrigin(0.5)
+        // Create Play Button
+        const playButton = this.add.image(width * 0.5, height * 0.6, 'button-panel')
+            .setDisplaySize(150, 50)
+            .setInteractive({ useHandCursor: true })
 
-        // Exit button
-        const exitButton = this.add.image(playButton.x, playButton.y + playButton.displayHeight + 10, 'button-panel').setDisplaySize(150, 50)
+        // @ts-ignore
+        const playText = this.add.text(playButton.x, playButton.y, 'Play', {
+            fontSize: '16px',
+            color: '#ffffff'
+        }).setOrigin(0.5)
 
-        this.add.text(exitButton.x, exitButton.y, 'Exit').setOrigin(0.5)
+        playButton.on('pointerover', () => {
+            playButton.setTint(0x44ff44)
+        })
 
+        playButton.on('pointerout', () => {
+            playButton.clearTint()
+        })
+
+        playButton.on('pointerup', () => {
+            console.log('Play button clicked')
+            // this.scene.start('your-next-scene')
+        })
+
+        // Create Exit Button
+        const exitButton = this.add.image(width * 0.5, height * 0.6 + 70, 'button-panel')
+            .setDisplaySize(150, 50)
+            .setInteractive({ useHandCursor: true })
+
+        // @ts-ignore 
+        const exitText = this.add.text(exitButton.x, exitButton.y, 'Exit', {
+            fontSize: '16px',
+            color: '#ffffff'
+        }).setOrigin(0.5)
+
+        exitButton.on('pointerover', () => {
+            exitButton.setTint(0xff4444)
+        })
+
+        exitButton.on('pointerout', () => {
+            exitButton.clearTint()
+        })
+
+        exitButton.on('pointerup', () => {
+            console.log('Exit button clicked')
+            // this.game.destroy(true)
+        })
     }
-
-
 }
