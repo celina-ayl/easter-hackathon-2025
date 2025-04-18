@@ -1,11 +1,11 @@
 import Phaser from 'phaser'
-
 //import HelloWorldScene from './scenes/HelloWorldScene'
+
 import GameShowLevel from './scenes/GameShowLevel'
 
-//import GameMenu from './scenes/GameMenu'
+import GameMenu from './scenes/GameMenu'
 
-// import CloudLevel from './scenes/CloudLevel'
+import CloudLevel from './scenes/CloudLevel'
 
 const config = {
 	type: Phaser.AUTO,
@@ -18,7 +18,7 @@ const config = {
 			gravity: { y: 200 },
 		},
 	},
-	scene: [GameShowLevel],
+	scene: [GameShowLevel, GameMenu, CloudLevel],
 }
 
 export default new Phaser.Game(config)

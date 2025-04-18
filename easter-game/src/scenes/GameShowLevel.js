@@ -75,7 +75,8 @@ export default class GameShowLevel extends Phaser.Scene {
         if (this.optionTexts) this.optionTexts.forEach(opt => opt.destroy());
         if (this.popupText) this.popupText.destroy();
 
-        this.questionNumberText.setText(`Question ${this.questionCounter + 1}`);
+        this.questionCounter++;
+        this.questionNumberText.setText(`Question ${this.questionCounter }`);
 
         this.screenQuestion = this.add.text(this.screen.x, this.screen.y - 80, this.currentQuestion.question, {
             fontSize: '25px',
@@ -132,7 +133,6 @@ export default class GameShowLevel extends Phaser.Scene {
     }
 
     updateQuestion() {
-        this.questionCounter++;
         this.checkIfLastQuestion();
         this.loadNextQuestion();
     }
@@ -142,13 +142,13 @@ export default class GameShowLevel extends Phaser.Scene {
     }
 
     checkIfLastQuestion() {
-        if (this.questionCounter === 5) {
+        if (this.questionCounter === 8) {
             this.endGame();
         }
     }
 
     endGame() {
-        if (this.score < 30) {
+        if (this.score < 50) {
             this.add.text(this.scale.width / 2, this.scale.height / 2, 'Not enough points to win.', {
                 fontFamily: 'Pixelify Sans',
                 fontSize: '24px',
@@ -160,7 +160,16 @@ export default class GameShowLevel extends Phaser.Scene {
                 this.scene.start('game-menu');
             });
         } else {
-            this.scene.start('game-menu');
+            this.add.text(this.scale.width / 2, this.scale.height / 2, 'You have earned enough points.', {
+                fontFamily: 'Pixelify Sans',
+                fontSize: '24px',
+                color: '#00ff00',
+                backgroundColor: '#000000cc',
+                padding: { x: 20, y: 10 }
+            }).setOrigin(0.5);
+            this.time.delayedCall(3000, () => {
+                this.scene.start('game-menu');
+            });
         }
     }
 } 
