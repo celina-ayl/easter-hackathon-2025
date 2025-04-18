@@ -106,7 +106,7 @@ export default class CloudLevel extends Phaser.Scene
 
         if (touchingDown)
         {
-            this.player.setVelocityY(-600)
+            this.player.setVelocityY(-300)
             this.player.setTexture('bunny-jump')
         }
 
