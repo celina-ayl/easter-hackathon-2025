@@ -1,0 +1,37 @@
+[
+  {
+    "question": "In Switzerland, what animal delivers Easter eggs to kids?",
+    "options": ["The sheep", "The cuckoo", "The goat", "The bear"],
+    "correct": 2
+  },
+  {
+    "question": "In what country did the tradition of the Easter Bunny originate?",
+    "options": ["Germany", "The United States", "Belgium", "Italy"],
+    "correct": 1
+  },
+  {
+    "question": "Easter Island is part of which country?",
+    "options": ["Chile", "Colombia", "Peru", "Argentina"],
+    "correct": 1
+  },
+  {
+    "question": "When were Cadbury Creme Eggs introduced?",
+    "options": ["1956", "1978", "1941", "1963"],
+    "correct": 4
+  },
+  {
+    "question": "The Sunday before Easter is called what?",
+    "options": ["Pre-Easter", "Good Sunday", "Palm Sunday", "Easter Sunday"],
+    "correct": 3
+  },
+  {
+    "question": "From what is the filling in Cadbury Creme Eggs made?",
+    "options": ["Cream cheese", "Fondant", "Melted chocolate", "Custard"],
+    "correct": 2
+  },
+  {
+    "question": "What egg-shaped candy was illegal in the United States?",
+    "options": ["Cadbury Creme Eggs", "Kinder Surprise", "M&M Eggs", "Lindt Chocolate Eggs"],
+    "correct": 2
+  }
+]
