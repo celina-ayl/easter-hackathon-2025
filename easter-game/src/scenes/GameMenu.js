@@ -6,14 +6,14 @@ export default class GameMenu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('GameMenu', 'assets/images/GameMenu.jpg')
+        this.load.image('GameMenu', 'assets/images/menu_background.png')
         this.load.image('button-panel', 'assets/images/buttonPanel.png')
     }
 
     create() {
         const { width, height } = this.scale
 
-        this.add.image(width / 2, height / 2, 'GameMenu')
+        this.add.image(width / 2, height / 2, 'GameMenu').setDisplaySize(width, height)
 
         // Create Play Button
         const playButton = this.add.image(width * 0.5, height * 0.6, 'button-panel')
