@@ -1,4 +1,5 @@
-import Phaser from 'phaser'
+import WebFont from 'webfontloader';
+import Phaser from 'phaser';
 
 export default class GameShowLevel extends Phaser.Scene {
 
@@ -6,12 +7,16 @@ export default class GameShowLevel extends Phaser.Scene {
         super('game-show-level');
         this.questionCounter = 0;
         this.askedQuestions = new Set();
+        this.score = 0;
     }
 
     preload() {
         this.load.image('Background', 'assets/images/GameShowBackground.jpg');
         this.load.image('Screen', 'assets/images/GameScreen.png');
         this.load.json('questions', 'assets/GameShow/QuestionsAnswers.json');
+
+        // Load Google Font via WebFont Loader
+        this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
 
     create() {
@@ -19,20 +24,42 @@ export default class GameShowLevel extends Phaser.Scene {
         this.add.image(width / 2, height / 2, 'Background').setDisplaySize(width, height);
         this.screen = this.add.image(width / 2, height / 2, 'Screen').setDisplaySize(600, 300);
 
+        WebFont.load({
+            google: {
+                families: ['Pixelify Sans']
+            },
+            active: () => {
+                this.startGame();
+            }
+        });
+    }
+
+    startGame() {
+        const { width } = this.scale;
         this.questionsData = this.cache.json.get('questions');
 
-        this.questionNumberText = this.add.text(width / 2, 80, '', {
-            fontSize: '24px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
+        this.questionNumberText = this.add.text(width - 20, 20, '', {
+            fontFamily: 'Pixelify Sans',
+            fontSize: '20px',
+            color: '#ffffff',
+            backgroundColor: '#000000cc',
+            padding: { x: 10, y: 5 }
+        }).setOrigin(1, 0);
+
+        this.scoreText = this.add.text(width - 20, 60, 'Score: 0', {
+            fontFamily: 'Pixelify Sans',
+            fontSize: '20px',
+            color: '#ffffff',
+            backgroundColor: '#000000cc',
+            padding: { x: 10, y: 5 }
+        }).setOrigin(1, 0);
 
         this.loadNextQuestion();
     }
 
     loadNextQuestion() {
         if (this.askedQuestions.size === this.questionsData.length) {
-            console.warn('All questions used.');
-            this.scene.start('game-menu');
+            this.endGame();
             return;
         }
 
@@ -44,31 +71,31 @@ export default class GameShowLevel extends Phaser.Scene {
         this.askedQuestions.add(randomIndex);
         this.currentQuestion = this.questionsData[randomIndex];
 
-        const { screen } = this;
-
         if (this.screenQuestion) this.screenQuestion.destroy();
         if (this.optionTexts) this.optionTexts.forEach(opt => opt.destroy());
         if (this.popupText) this.popupText.destroy();
 
         this.questionNumberText.setText(`Question ${this.questionCounter + 1}`);
 
-        this.screenQuestion = this.add.text(screen.x, screen.y - 80, this.currentQuestion.question, {
-            fontSize: '20px',
+        this.screenQuestion = this.add.text(this.screen.x, this.screen.y - 80, this.currentQuestion.question, {
+            fontSize: '25px',
+            fontFamily: 'Pixelify Sans',
             color: '#ffffff',
             wordWrap: { width: 500 },
             align: 'center'
         }).setOrigin(0.5);
 
         const positions = [
-            { x: screen.x - 150, y: screen.y + 30 },
-            { x: screen.x - 150, y: screen.y + 80 },
-            { x: screen.x + 150, y: screen.y + 30 },
-            { x: screen.x + 150, y: screen.y + 80 }
+            { x: this.screen.x - 150, y: this.screen.y + 30 },
+            { x: this.screen.x - 150, y: this.screen.y + 80 },
+            { x: this.screen.x + 150, y: this.screen.y + 30 },
+            { x: this.screen.x + 150, y: this.screen.y + 80 }
         ];
 
         this.optionTexts = this.currentQuestion.options.map((opt, index) => {
             const textObj = this.add.text(positions[index].x, positions[index].y, opt, {
-                fontSize: '16px',
+                fontSize: '20px',
+                fontFamily: 'Pixelify Sans',
                 color: '#ffffff'
             }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
@@ -83,6 +110,9 @@ export default class GameShowLevel extends Phaser.Scene {
     validateAnswer(selectedIndex) {
         const isCorrect = (selectedIndex + 1) === this.currentQuestion.correct;
         this.showPopup(isCorrect ? 'Correct!' : 'Wrong!');
+
+        if (isCorrect) this.score += 10;
+        this.scoreText.setText(`Score: ${this.score}`);
 
         this.time.delayedCall(1500, () => {
             if (isCorrect) this.updateQuestion();
@@ -113,7 +143,24 @@ export default class GameShowLevel extends Phaser.Scene {
 
     checkIfLastQuestion() {
         if (this.questionCounter === 5) {
+            this.endGame();
+        }
+    }
+
+    endGame() {
+        if (this.score < 30) {
+            this.add.text(this.scale.width / 2, this.scale.height / 2, 'Not enough points to win.', {
+                fontFamily: 'Pixelify Sans',
+                fontSize: '24px',
+                color: '#ff0000',
+                backgroundColor: '#000000cc',
+                padding: { x: 20, y: 10 }
+            }).setOrigin(0.5);
+            this.time.delayedCall(3000, () => {
+                this.scene.start('game-menu');
+            });
+        } else {
             this.scene.start('game-menu');
         }
     }
-}
+} 
