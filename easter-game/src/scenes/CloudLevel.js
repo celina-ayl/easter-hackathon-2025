@@ -72,69 +72,56 @@ export default class CloudLevel extends Phaser.Scene
         this.cameras.main.setDeadzone(this.scale.width * 1.5)
     }
 
-    update()
-    {
-        this.platforms.children.iterate(child =>
-        {
+    update() {
+        this.platforms.children.iterate(child => {
             /** @type {Phaser.Physics.Arcade.Sprite} */
             // @ts-ignore
             const platform = child
-
+    
             const scrollY = this.cameras.main.scrollY
-            if (platform.y >= scrollY + 640)
-            {
+            if (platform.y >= scrollY + 640) {
                 platform.y = scrollY - Phaser.Math.Between(80, 120)
                 platform.x = Phaser.Math.Between(40, 440)
                 platform.body.updateFromGameObject()
             }
         })
-
-        this.clouds.children.iterate(child =>
-        {
+    
+        this.clouds.children.iterate(child => {
             /** @type {Phaser.GameObjects.Image} */
             // @ts-ignore
             const cloud = child
-
+    
             const scrollY = this.cameras.main.scrollY
-            if (cloud.y >= scrollY + 800)
-            {
+            if (cloud.y >= scrollY + 800) {
                 cloud.y = scrollY - Phaser.Math.Between(20, 60)
             }
         })
-
-        const touchingDown = this.player.body.touching.down;
-
-        if (touchingDown)
-        {
-            this.player.setVelocityY(-300)
+    
+        const touchingDown = this.player.body.touching.down
+    
+        if (touchingDown) {
+            this.player.setVelocityY(-300) // Adjusted jump height
             this.player.setTexture('bunny-jump')
         }
-
+    
         const vy = this.player.body.velocity.y
-        if (vy > 0 && this.player.texture.key !== 'bunny-stand')
-        {
+        if (vy > 0 && this.player.texture.key !== 'bunny-stand') {
             this.player.setTexture('bunny-stand')
         }
-
-        if (this.cursors.left.isDown && !touchingDown)
-        {
+    
+        if (this.cursors.left.isDown && !touchingDown) {
             this.player.setVelocityX(-200)
-        }
-        else if (this.cursors.right.isDown && !touchingDown)
-        {
+        } else if (this.cursors.right.isDown && !touchingDown) {
             this.player.setVelocityX(200)
-        }
-        else
-        {
+        } else {
             this.player.setVelocityX(0)
         }
-
+    
         this.horizontalWrap(this.player)
-
+    
         const bottomPlatform = this.findBottomMostPlatform()
-        if (this.player.y > bottomPlatform.y + 200)
-        {
-            this.scene.start('game-over')
+        if (this.player.y > bottomPlatform.y + 200) {
+            this.showRestartPopup()
         }
     }
 
@@ -173,5 +160,45 @@ export default class CloudLevel extends Phaser.Scene
         }
 
         return bottomPlatform;
+    }
+
+    showRestartPopup() {
+        // Pause the game
+        this.physics.pause()
+    
+        // Create a semi-transparent background for the popup
+        const popupBackground = this.add.rectangle(240, 320, 400, 200, 0x000000, 0.8)
+    
+        // Add text to the popup
+        const popupText = this.add.text(240, 280, 'Restart Level?', {
+            fontSize: '24px',
+            color: '#ffffff',
+        }).setOrigin(0.5)
+    
+        // Add a "Yes" button
+        const yesButton = this.add.text(200, 340, 'Yes', {
+            fontSize: '20px',
+            color: '#00ff00',
+        }).setOrigin(0.5).setInteractive()
+    
+        yesButton.on('pointerdown', () => {
+            // Restart the level
+            this.scene.restart()
+        })
+    
+        // Add a "No" button
+        const noButton = this.add.text(280, 340, 'No', {
+            fontSize: '20px',
+            color: '#ff0000',
+        }).setOrigin(0.5).setInteractive()
+    
+        noButton.on('pointerdown', () => {
+            // Resume the game and hide the popup
+            popupBackground.destroy()
+            popupText.destroy()
+            yesButton.destroy()
+            noButton.destroy()
+            this.physics.resume()
+        })
     }
 }
