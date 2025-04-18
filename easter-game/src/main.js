@@ -5,6 +5,8 @@ import GameShowLevel from './scenes/GameShowLevel'
 
 //import GameMenu from './scenes/GameMenu'
 
+// import CloudLevel from './scenes/CloudLevel'
+
 const config = {
 	type: Phaser.AUTO,
 	parent: 'app',
