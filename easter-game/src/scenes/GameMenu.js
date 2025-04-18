@@ -20,6 +20,11 @@ export default class GameMenu extends Phaser.Scene {
             .setDisplaySize(150, 50)
             .setInteractive({ useHandCursor: true })
 
+            playButton.on('pointerdown', () => {
+                this.scene.start('cloud-level')
+            })
+
+
         // @ts-ignore
         const playText = this.add.text(playButton.x, playButton.y, 'Play', {
             fontSize: '16px',
