@@ -33,5 +33,54 @@
     "question": "What egg-shaped candy was illegal in the United States?",
     "options": ["Cadbury Creme Eggs", "Kinder Surprise", "M&M Eggs", "Lindt Chocolate Eggs"],
     "correct": 2
+  },
+  {
+    "question": "What flower is most commonly associated with Easter?",
+    "options": ["Lily", "Baby's-breath", "Tulip", "Daffodil"],
+    "correct": 1
+  },
+  {
+    "question": "Which country is credited with starting the tradition of the Easter egg hunt?",
+    "options": ["United Kingdom", "Germany", "United States", "Australia"],
+    "correct": 2
+  },
+  {
+    "question": "n which country is it traditional to have a large Easter Sunday feast, with lamb as the centerpiece?",
+    "options": ["Turkey", "Italy", "Spain", "Greece"],
+    "correct": 4
+  },
+  {
+    "question": "Which animal is often featured in Easter-themed decorations and represents springtime?",
+    "options": ["Duck", "Fox", "Deer", "Rabbit"],
+    "correct": 4
+  },
+  {
+    "question": "In the United States, which holiday immediately follows Easter Sunday?",
+    "options": ["Labor Day", "Mother’s Day", "April Fool's Day", "Earth Day"],
+    "correct": 4
+  },
+  {
+    "question": "Which popular springtime treat is made by marshmallows shaped like chicks and bunnies?",
+    "options": ["Cadbury Creme Eggs", "Jelly Beans", "Peeps", "Tootsie Rolls"],
+    "correct": 3
+  },
+  {
+    "question": "What is the term for the week leading up to Easter Sunday?",
+    "options": ["Holy Week", "Spring Week", "Lenten Week", "Resurrection Week"],
+    "correct": 2
+  },
+  {
+    "question": "Which color is traditionally associated with Easter?",
+    "options": ["Blue", "Pink", "Yellow", "Purple"],
+    "correct": 3
+  },
+  {
+    "question": "Which famous artist created a series of Easter-themed paintings of eggs?",
+    "options": ["Vincent van Gogh", "Claude Monet", "Salvador Dalí", "Pablo Picasso"],
+    "correct": 2
+  },{
+    "question": "Which U.S. state is home to the largest Easter egg hunt in the world?",
+    "options": ["Florida", "Texas", "Tennessee", "Georgia"],
+    "correct": 3
   }
 ]
