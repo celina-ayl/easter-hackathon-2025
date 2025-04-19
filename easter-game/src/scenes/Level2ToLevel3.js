@@ -1,9 +1,9 @@
 import Phaser from 'phaser'
 import WebFont from 'webfontloader';
 
-export default class Level1ToLevel2 extends Phaser.Scene {
+export default class Level2ToLevel3 extends Phaser.Scene {
     constructor() {
-        super('interlude2')
+        super('interlude3')
     }
 
     preload() {
@@ -34,11 +34,10 @@ export default class Level1ToLevel2 extends Phaser.Scene {
 
     startDialogue() {
         this.dialogues = [
-            { speaker: 'Chicken', text: "JUDITH:    Thank you for rescuing my first egg! " },
-            { speaker: 'Chicken', text: "I just have two left." },
-            { speaker: 'MC', text: "YOU:    It was no problem. What's the next situation like?" },
-            { speaker: 'Chicken', text: "JUDITH:    This one was stolen by Steve Bunny." },
-            { speaker: 'Chicken', text: "If you score enough points, he'll give you my next egg!" }
+            { speaker: 'Chicken', text: "JUDITH:    Wow you really know your Easter facts! " },
+            { speaker: 'MC', text: "YOU:    I guess I do." },
+            { speaker: 'Chicken', text: "JUDITH:    So this last egg is in a LOT of trouble." },
+            { speaker: 'Chicken', text: "Please try and rescue this one as fast as possible!" }
         ]
 
         this.dialogueIndex = 0
@@ -95,8 +94,8 @@ export default class Level1ToLevel2 extends Phaser.Scene {
         this.dialogueIndex++
 
         if (this.dialogueIndex >= this.dialogues.length) {
-            this.scene.stop('interlude2')
-            this.scene.start('game-show-level')
+            this.scene.stop('interlude3')
+            this.scene.start('forest-level')
         } else {
             this.showDialogue(this.dialogues[this.dialogueIndex])
         }
