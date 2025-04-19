@@ -1,5 +1,4 @@
 import Phaser from 'phaser'
-//import HelloWorldScene from './scenes/HelloWorldScene'
 
 import GameShowLevel from './scenes/GameShowLevel'
 
