@@ -13,6 +13,8 @@ import Level1ToLevel2 from './scenes/Level1ToLevel2'
 
 import Level2ToLevel3 from './scenes/Level2ToLevel3'
 
+import EggCracking from './scenes/EggCracking'
+
 const config = {
 	type: Phaser.AUTO,
 	parent: 'app',
@@ -24,7 +26,7 @@ const config = {
 			gravity: { y: 200 },
 		},
 	},
-	scene: [ GameMenu, Level1ToLevel2, Level2ToLevel3, MenuToLevel1, CloudLevel, GameShowLevel],
+	scene: [ EggCracking, GameMenu, Level1ToLevel2, Level2ToLevel3, MenuToLevel1, CloudLevel, GameShowLevel],
 }
 
 export default new Phaser.Game(config)
