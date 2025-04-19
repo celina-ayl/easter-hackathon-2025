@@ -27,7 +27,7 @@ const config = {
 			gravity: { y: 200 },
 		},
 	},
-	scene: [ EggCracking, GameMenu, Level1ToLevel2, Level2ToLevel3, MenuToLevel1, CloudLevel, GameShowLevel, ForestLevel],
+	scene: [  GameMenu, Level1ToLevel2, Level2ToLevel3, MenuToLevel1, CloudLevel, GameShowLevel, ForestLevel, EggCracking],
 }
 
 export default new Phaser.Game(config)

@@ -135,6 +135,7 @@ export default class ForestLevel extends Phaser.Scene {
         this.fire.setVisible(false)
         this.statusText.setText('Fire extinguished!')
         this.eggDropping = true
+        this.scene.start('egg-cracking')
     }
 
     shootWater() {

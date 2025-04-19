@@ -11,7 +11,7 @@ export default class GameShowLevel extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('Background', 'assets/images/GameShowBackground.jpg');
+        this.load.image('GameShowBackground', 'assets/images/GameShowBackground.jpg');
         this.load.image('Screen', 'assets/images/GameScreen.png');
         this.load.json('questions', 'assets/GameShow/QuestionsAnswers.json');
         
@@ -26,7 +26,7 @@ export default class GameShowLevel extends Phaser.Scene {
 
     create() {
         const { width, height } = this.scale;
-        this.add.image(width / 2, height / 2, 'Background').setDisplaySize(width, height);
+        this.add.image(width / 2, height / 2, 'GameShowBackground').setDisplaySize(width, height);
         this.screen = this.add.image(width / 2, height / 2, 'Screen').setDisplaySize(600, 300);
 
         this.MC = this.add.image(width-700, height-150, 'MC').setDisplaySize(400,400);

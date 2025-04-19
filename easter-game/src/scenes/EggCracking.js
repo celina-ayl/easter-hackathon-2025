@@ -7,7 +7,7 @@ export default class EggCracking extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('Background', 'assets/images/bg_layer1.png');
+        this.load.image('EggBackground', 'assets/images/bg_layer1.png');
         
         this.load.image('Egg1', `assets/images/EggCracking/Egg1.png`);
         this.load.image('Egg2', `assets/images/EggCracking/Egg2.png`);
@@ -24,7 +24,7 @@ export default class EggCracking extends Phaser.Scene {
     create() {
         const { width, height } = this.scale
 
-        this.add.image(width / 2, height / 2, 'Background').setDisplaySize(width, height)
+        this.add.image(width / 2, height / 2, 'EggBackground').setDisplaySize(width, height)
 
         WebFont.load({
             google: {
