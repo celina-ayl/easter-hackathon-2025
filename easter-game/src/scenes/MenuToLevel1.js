@@ -108,7 +108,6 @@ export default class MenuToLevel1 extends Phaser.Scene {
         this.dialogueIndex++
 
         if (this.dialogueIndex >= this.dialogues.length) {
-            this.interludeMusic.stop();
             this.showAcceptButton()
             this.showDenyButton()
         } else {
@@ -125,7 +124,10 @@ export default class MenuToLevel1 extends Phaser.Scene {
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => this.acceptButton.setTint(0x44ff44))
             .on('pointerout', () => this.acceptButton.clearTint())
-            .on('pointerup', () => this.scene.start('cloud-level'))
+            .on('pointerup', () => {
+                this.interludeMusic.stop(); // Stop the music
+                this.scene.start('cloud-level'); // Start the next scene
+            });
 
         this.acceptButtonText = this.add.text(centerX, centerY, 'Accept Quest', {
             fontFamily: 'Pixelify Sans',
@@ -143,7 +145,10 @@ export default class MenuToLevel1 extends Phaser.Scene {
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => this.denyButton.setTint(0xff0000))
             .on('pointerout', () => this.denyButton.clearTint())
-            .on('pointerup', () => this.scene.start('game-menu'))
+            .on('pointerup', () => {
+            this.interludeMusic.stop(); // Stop the music
+            this.scene.start('game-menu'); // Return to the game menu
+        })
 
         this.denyButtonText = this.add.text(centerX, centerY, 'Deny Judith', {
             fontFamily: 'Pixelify Sans',

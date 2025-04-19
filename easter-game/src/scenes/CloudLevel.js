@@ -32,6 +32,7 @@ export default class CloudLevel extends Phaser.Scene
         this.load.image('bunny', 'assets/images/BunnyPrototype.png')
         this.load.image('platform', 'assets/images/ground.png')
         this.load.image('easter-egg', 'assets/images/easter_egg.png')
+        this.load.audio('cloud-music', 'assets/sound/cloud-level.mp3')
     }
 
     create() {
@@ -50,6 +51,10 @@ export default class CloudLevel extends Phaser.Scene
         }
     
         this.platforms = this.physics.add.staticGroup()
+
+        // Play the background music
+        this.cloudMusic = this.sound.add('cloud-music', { loop: true, volume: 0.5 });
+        this.cloudMusic.play();
     
         // --- Initial Platform Creation ---
         const initialPlatforms = 5
@@ -206,6 +211,10 @@ export default class CloudLevel extends Phaser.Scene
         // Pause the game physics and scene updates
         this.physics.pause();
 
+        if (this.cloudMusic) {
+            this.cloudMusic.stop();
+        }
+    
         // Make the egg disappear
         egg.destroy();
         this.easterEgg = null; // Clear the reference
