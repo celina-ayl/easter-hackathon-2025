@@ -164,7 +164,7 @@ export default class GameShowLevel extends Phaser.Scene {
                 padding: { x: 20, y: 10 }
             }).setOrigin(0.5);
             this.time.delayedCall(3000, () => {
-                this.scene.start('game-menu');
+                this.scene.start('game-show-level');
             });
         } else {
             this.add.text(this.scale.width / 2, this.scale.height / 2, 'You have earned enough points.', {
@@ -175,7 +175,7 @@ export default class GameShowLevel extends Phaser.Scene {
                 padding: { x: 20, y: 10 }
             }).setOrigin(0.5);
             this.time.delayedCall(3000, () => {
-                this.scene.start('game-menu');
+                this.scene.start('interlude3');
             });
         }
     }
