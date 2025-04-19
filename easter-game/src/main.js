@@ -1,11 +1,12 @@
 import Phaser from 'phaser'
-//import HelloWorldScene from './scenes/HelloWorldScene'
 
 import GameShowLevel from './scenes/GameShowLevel'
 
 import GameMenu from './scenes/GameMenu'
 
 import CloudLevel from './scenes/CloudLevel'
+
+import ForestLevel from './scenes/ForestLevel'
 
 import MenuToLevel1  from './scenes/MenuToLevel1'
 
@@ -26,7 +27,7 @@ const config = {
 			gravity: { y: 200 },
 		},
 	},
-	scene: [ EggCracking, GameMenu, Level1ToLevel2, Level2ToLevel3, MenuToLevel1, CloudLevel, GameShowLevel],
+	scene: [ EggCracking, GameMenu, Level1ToLevel2, Level2ToLevel3, MenuToLevel1, CloudLevel, GameShowLevel, ForestLevel],
 }
 
 export default new Phaser.Game(config)
