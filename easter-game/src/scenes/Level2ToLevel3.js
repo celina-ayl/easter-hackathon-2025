@@ -12,6 +12,7 @@ export default class Level2ToLevel3 extends Phaser.Scene {
         this.load.image('Chicken', 'assets/images/Chicken.png');
         this.load.image('button-panel', 'assets/images/buttonPanel.png');
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+        this.load.audio('interlude-music', 'assets/sound/interlude.mp3');
     }
 
     create() {
@@ -21,6 +22,10 @@ export default class Level2ToLevel3 extends Phaser.Scene {
 
         this.MC = this.add.image(width - 700, height - 120, 'MC').setDisplaySize(400, 400);
         this.Chicken = this.add.image(width - 150, height - 150, 'Chicken').setDisplaySize(350, 330);
+
+        // Play the background music
+        this.interludeMusic = this.sound.add('interlude-music', { loop: true, volume: 0.5 });
+        this.interludeMusic.play();
 
         WebFont.load({
             google: {
@@ -94,6 +99,7 @@ export default class Level2ToLevel3 extends Phaser.Scene {
         this.dialogueIndex++
 
         if (this.dialogueIndex >= this.dialogues.length) {
+            this.interludeMusic.stop();
             this.scene.stop('interlude3')
             this.scene.start('forest-level')
         } else {
