@@ -183,7 +183,7 @@ export default class CloudLevel extends Phaser.Scene
 
         // Create the egg as a static sprite (it won't fall)
         this.easterEgg = this.physics.add.staticSprite(eggX, eggY, 'easter-egg');
-        this.easterEgg.setScale(0.3); // Adjust scale as needed
+        this.easterEgg.setScale(0.06); // Adjust scale as needed
         this.easterEgg.setDepth(0); // Render egg behind player but above clouds
         this.easterEgg.refreshBody(); // Update physics body after scaling/positioning
 
@@ -209,6 +209,7 @@ export default class CloudLevel extends Phaser.Scene
         // Make the egg disappear
         egg.destroy();
         this.easterEgg = null; // Clear the reference
+        this.scene.start('interlude2');
     }
 
 
