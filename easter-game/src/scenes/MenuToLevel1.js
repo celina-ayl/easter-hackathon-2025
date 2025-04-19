@@ -53,6 +53,11 @@ export default class MenuToLevel1 extends Phaser.Scene {
             this.acceptButtonText.destroy()
         }
 
+        if (this.denyButton) {
+            this.denyButton.destroy()
+            this.denyButtonText.destroy()
+        }
+
         const bubbleWidth = 500
         const bubbleHeight = 100
         const bubbleX = speaker === 'Chicken' ? 250 : 100
@@ -99,6 +104,7 @@ export default class MenuToLevel1 extends Phaser.Scene {
 
         if (this.dialogueIndex >= this.dialogues.length) {
             this.showAcceptButton()
+            this.showDenyButton()
         } else {
             this.showDialogue(this.dialogues[this.dialogueIndex])
         }
@@ -106,7 +112,7 @@ export default class MenuToLevel1 extends Phaser.Scene {
 
     showAcceptButton() {
         const centerX = this.scale.width / 2
-        const centerY = this.scale.height - 100
+        const centerY = this.scale.height - 200
 
         this.acceptButton = this.add.image(centerX, centerY, 'button-panel')
             .setDisplaySize(200, 60)
@@ -116,6 +122,24 @@ export default class MenuToLevel1 extends Phaser.Scene {
             .on('pointerup', () => this.scene.start('cloud-level'))
 
         this.acceptButtonText = this.add.text(centerX, centerY, 'Accept Quest', {
+            fontFamily: 'Pixelify Sans',
+            fontSize: '20px',
+            color: '#ffffff'
+        }).setOrigin(0.5)
+    }
+
+    showDenyButton() {
+        const centerX = this.scale.width / 2
+        const centerY = this.scale.height - 100
+
+        this.denyButton = this.add.image(centerX, centerY, 'button-panel')
+            .setDisplaySize(200, 60)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => this.denyButton.setTint(0xff0000))
+            .on('pointerout', () => this.denyButton.clearTint())
+            .on('pointerup', () => this.scene.start('game-menu'))
+
+        this.denyButtonText = this.add.text(centerX, centerY, 'Deny Judith', {
             fontFamily: 'Pixelify Sans',
             fontSize: '20px',
             color: '#ffffff'
