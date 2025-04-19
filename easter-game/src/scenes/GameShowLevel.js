@@ -14,6 +14,11 @@ export default class GameShowLevel extends Phaser.Scene {
         this.load.image('Background', 'assets/images/GameShowBackground.jpg');
         this.load.image('Screen', 'assets/images/GameScreen.png');
         this.load.json('questions', 'assets/GameShow/QuestionsAnswers.json');
+        
+        // MC for the main character
+        this.load.image('MC', 'assets/images/BunnyPrototype.png');
+
+        this.load.image('SteveBunny', 'assets/images/SteveBunny.png');
 
         // Load Google Font via WebFont Loader
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
@@ -24,6 +29,8 @@ export default class GameShowLevel extends Phaser.Scene {
         this.add.image(width / 2, height / 2, 'Background').setDisplaySize(width, height);
         this.screen = this.add.image(width / 2, height / 2, 'Screen').setDisplaySize(600, 300);
 
+        this.MC = this.add.image(width-700, height-150, 'MC').setDisplaySize(400,400);
+        this.SteveBunny = this.add.image(width-100, height-150, 'SteveBunny').setDisplaySize(200,300);
         WebFont.load({
             google: {
                 families: ['Pixelify Sans']
