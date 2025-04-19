@@ -10,6 +10,7 @@ export default class MenuToLevel1 extends Phaser.Scene {
         this.load.image('Background', 'assets/images/InterludeBackground.png');
         this.load.image('MC', 'assets/images/BunnyPrototype.png');
         this.load.image('Chicken', 'assets/images/Chicken.png');
+        this.load.image('button-panel', 'assets/images/buttonPanel.png');
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
 
@@ -40,48 +41,84 @@ export default class MenuToLevel1 extends Phaser.Scene {
         ]
 
         this.dialogueIndex = 0
+        this.typingTween = null
         this.showDialogue(this.dialogues[this.dialogueIndex])
-
-        this.input.once('pointerdown', () => this.nextDialogue())
     }
 
     showDialogue({ speaker, text }) {
         if (this.speechBubble) this.speechBubble.destroy()
         if (this.speechText) this.speechText.destroy()
+        if (this.acceptButton) {
+            this.acceptButton.destroy()
+            this.acceptButtonText.destroy()
+        }
 
         const bubbleWidth = 500
         const bubbleHeight = 100
-        const bubbleX = 150
-        var bubbleY = 450
+        const bubbleX = speaker === 'Chicken' ? 250 : 100
+        const bubbleY = speaker === 'Chicken' ? 150 : 350
 
-        if (speaker === 'Chicken'){
-            bubbleY = 200
-        }
         const bubble = this.add.graphics({ x: bubbleX, y: bubbleY })
         bubble.fillStyle(0xffffff, 1)
         bubble.lineStyle(4, 0x565656, 1)
         bubble.strokeRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16)
         bubble.fillRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16)
 
-        const textObj = this.add.text(bubbleX + 20, bubbleY + 20, text, {
+        const textObj = this.add.text(bubbleX + 20, bubbleY + 20, '', {
             fontFamily: 'Pixelify Sans',
             fontSize: '18px',
-            align: 'center',
             color: '#000000',
             wordWrap: { width: bubbleWidth - 40 }
         })
 
         this.speechBubble = bubble
         this.speechText = textObj
+
+        this.typeText(textObj, text, () => {
+            this.input.once('pointerdown', () => this.nextDialogue())
+        })
+    }
+
+    typeText(textObj, fullText, onComplete) {
+        const length = fullText.length
+        let i = 0
+
+        this.typingTween = this.time.addEvent({
+            delay: 30,
+            repeat: length - 1,
+            callback: () => {
+                textObj.text += fullText[i]
+                i++
+                if (i === length && onComplete) onComplete()
+            }
+        })
     }
 
     nextDialogue() {
         this.dialogueIndex++
+
         if (this.dialogueIndex >= this.dialogues.length) {
-            this.scene.start('cloud-level')
+            this.showAcceptButton()
         } else {
             this.showDialogue(this.dialogues[this.dialogueIndex])
-            this.input.once('pointerdown', () => this.nextDialogue())
         }
+    }
+
+    showAcceptButton() {
+        const centerX = this.scale.width / 2
+        const centerY = this.scale.height - 100
+
+        this.acceptButton = this.add.image(centerX, centerY, 'button-panel')
+            .setDisplaySize(200, 60)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => this.acceptButton.setTint(0x44ff44))
+            .on('pointerout', () => this.acceptButton.clearTint())
+            .on('pointerup', () => this.scene.start('cloud-level'))
+
+        this.acceptButtonText = this.add.text(centerX, centerY, 'Accept Quest', {
+            fontFamily: 'Pixelify Sans',
+            fontSize: '20px',
+            color: '#ffffff'
+        }).setOrigin(0.5)
     }
 }
