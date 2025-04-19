@@ -33,7 +33,7 @@ export default class GameMenu extends Phaser.Scene {
             .setInteractive({ useHandCursor: true })
 
             playButton.on('pointerdown', () => {
-                this.scene.start('cloud-level')
+                this.scene.start('interlude1')
             })
 
 
