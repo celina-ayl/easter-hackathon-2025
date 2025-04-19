@@ -149,7 +149,7 @@ export default class GameShowLevel extends Phaser.Scene {
     }
 
     checkIfLastQuestion() {
-        if (this.questionCounter === 8) {
+        if (this.questionCounter >= 8) {
             this.endGame();
         }
     }

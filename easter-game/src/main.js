@@ -7,6 +7,8 @@ import GameMenu from './scenes/GameMenu'
 
 import CloudLevel from './scenes/CloudLevel'
 
+import MenuToLevel1  from './scenes/MenuToLevel1'
+
 const config = {
 	type: Phaser.AUTO,
 	parent: 'app',
@@ -18,7 +20,7 @@ const config = {
 			gravity: { y: 200 },
 		},
 	},
-	scene: [GameShowLevel, GameMenu, CloudLevel],
+	scene: [GameMenu, MenuToLevel1, CloudLevel, GameShowLevel],
 }
 
 export default new Phaser.Game(config)
