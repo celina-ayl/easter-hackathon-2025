@@ -17,6 +17,12 @@ export default class EggCracking extends Phaser.Scene {
         this.load.image('Egg6', `assets/images/EggCracking/Egg6.png`);
         this.load.image('Egg7', `assets/images/EggCracking/Egg7.png`);
         this.load.image('Egg8', `assets/images/EggCracking/Egg8.png`);
+        this.load.image('monsterChicken1', `assets/images/EggCracking/monsterChicken1.png`)
+        this.load.image('monsterChicken2', `assets/images/EggCracking/monsterChicken2.png`)
+        this.load.image('monsterChicken3', `assets/images/EggCracking/monsterChicken3.png`)
+        this.load.image('monsterChicken4', `assets/images/EggCracking/monsterChicken4.png`)
+        this.load.image('monsterChicken5', `assets/images/EggCracking/monsterChicken5.png`)
+        this.load.image('monsterChicken6', `assets/images/EggCracking/monsterChicken6.png`)
 
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
@@ -108,6 +114,8 @@ export default class EggCracking extends Phaser.Scene {
         
             if (this.eggStage > this.maxEggStage) {
                 // optionally trigger next scene or event here
+                this.currentEgg.setVisible(false)
+                this.showMonsterChicken()
                 return
             }
         
@@ -117,6 +125,10 @@ export default class EggCracking extends Phaser.Scene {
             this.currentEgg.setTexture('Egg' + this.eggStage)
             this.currentEgg.setDisplaySize(newSize, newSize)
         })
-        
+    }
+
+    showMonsterChicken() {
+        this.monsterChicken = this.add.image(400, 300, 'monsterChicken1').setDisplaySize(300, 300)
+        this.monsterChicken.setVisible(true)
     }
 }
