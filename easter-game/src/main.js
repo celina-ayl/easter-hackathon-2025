@@ -20,7 +20,7 @@ const config = {
 			gravity: { y: 200 },
 		},
 	},
-	scene: [MenuToLevel1],
+	scene: [MenuToLevel1, CloudLevel],
 	// scene: [GameShowLevel, GameMenu, MenuToLevel1, CloudLevel],
 }
 
