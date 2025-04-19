@@ -105,13 +105,18 @@ export default class EggCracking extends Phaser.Scene {
 
         this.currentEgg.on('pointerup', () => {
             this.eggStage++
-
+        
             if (this.eggStage > this.maxEggStage) {
                 // optionally trigger next scene or event here
                 return
             }
-
+        
+            const scaleFactor = 1 + (this.eggStage - 1) * 0.1
+            const newSize = 300 * scaleFactor
+        
             this.currentEgg.setTexture('Egg' + this.eggStage)
+            this.currentEgg.setDisplaySize(newSize, newSize)
         })
+        
     }
 }

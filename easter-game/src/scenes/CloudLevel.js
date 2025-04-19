@@ -18,7 +18,7 @@ export default class CloudLevel extends Phaser.Scene
     
     easterEgg = null // Reference to the egg sprite
     platformCount = 0
-    eggTargetPlatform = 10 // Which platform should have the egg
+    eggTargetPlatform = 15 // Which platform should have the egg
     eggSpawned = false
 
     constructor()
